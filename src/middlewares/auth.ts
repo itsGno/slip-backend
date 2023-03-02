@@ -12,7 +12,9 @@ export default (req: Request, res: Response, next: NextFunction) => {
     });
 
   try {
+    console.log("🚀 ~ file: auth.ts:17 ~ token:", token);
     const data = jwt.verify(token);
+    console.log("🚀 ~ file: auth.ts:17 ~ data:", data);
     res.locals.payload = data;
     return next();
   } catch {
