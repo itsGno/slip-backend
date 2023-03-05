@@ -9,39 +9,34 @@ async function main() {
       email: 'alice@prisma.io',
       name: 'Alice',
       password: bcrypt.hashSync('password', 8),
-      posts: {
-        create: {
-          title: 'Check out Prisma with Next.js',
-          content: 'https://www.prisma.io/nextjs',
-          published: true,
-        },
-      },
+      mobileNo:'0980980980',
+      status: 'ACTIVE',
     },
   });
 
-  await prisma.user.upsert({
-    where: { email: 'bob@prisma.io' },
-    update: {},
-    create: {
-      email: 'bob@prisma.io',
-      name: 'Bob',
-      password: bcrypt.hashSync('password', 8),
-      posts: {
-        create: [
-          {
-            title: 'Follow Prisma on Twitter',
-            content: 'https://twitter.com/prisma',
-            published: true,
-          },
-          {
-            title: 'Follow Nexus on Twitter',
-            content: 'https://twitter.com/nexusgql',
-            published: true,
-          },
-        ],
-      },
-    },
-  });
+//   await prisma.user.upsert({
+//     where: { email: 'bob@prisma.io' },
+//     update: {},
+//     create: {
+//       email: 'bob@prisma.io',
+//       name: 'Bob',
+//       password: bcrypt.hashSync('password', 8),
+//       posts: {
+//         create: [
+//           {
+//             title: 'Follow Prisma on Twitter',
+//             content: 'https://twitter.com/prisma',
+//             published: true,
+//           },
+//           {
+//             title: 'Follow Nexus on Twitter',
+//             content: 'https://twitter.com/nexusgql',
+//             published: true,
+//           },
+//         ],
+//       },
+//     },
+//   });
 }
 
 main()
