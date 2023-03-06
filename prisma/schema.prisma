@@ -7,18 +7,15 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-
 model User {
   id        Int      @id @default(autoincrement())
   email     String   @unique
   password  String   @db.VarChar(255)
   mobileNo  String
-  status    status  @default(ACTIVE)
+  status    status   @default(ACTIVE)
   name      String?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-
-
 
   service Service[]
 }
@@ -44,22 +41,24 @@ model Service {
   user           User                 @relation(fields: [userId], references: [id])
   userId         Int                  @unique
 
-  bankAccount BankAccount[]
-  packageOrderId Int?
+  bankAccount    BankAccount[]
+  packageOrderId PackageOrder[]
 }
 
 model PackageOrder {
-  id        Int      @id @default(autoincrement())
+  // id Int @id @default(autoincrement())
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt   DateTime           @default(now())
+  updatedAt   DateTime           @updatedAt
   paymentDate DateTime?
-  status  statusPackageOrder
-  serviceId Int
-  packageId Int
+  status      statusPackageOrder
+  serviceId   Int
+  packageId   Int
+  Service     Service            @relation(fields: [serviceId], references: [id])
+  Package     Package            @relation(fields: [packageId], references: [id])
+
+  @@id([serviceId, packageId])
 }
-
-
 
 model Package {
   id           Int      @id @default(autoincrement())
@@ -70,25 +69,23 @@ model Package {
 
   // service   Service @relation(fields: [serviceId], references: [id])
   // serviceId Int
-  packageOrderId Int
+  packageOrderId PackageOrder[]
 }
 
 model BankAccount {
-  id           Int      @id @default(autoincrement())
-  firstNameTH         String
-  lastNameTH         String
-  firstNameEN         String
-  lastNameEN         String
+  id            Int      @id @default(autoincrement())
+  firstNameTH   String
+  lastNameTH    String
+  firstNameEN   String
+  lastNameEN    String
   accountNumber String
-  bank        String
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+  bank          String
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
 
   service   Service @relation(fields: [serviceId], references: [id])
   serviceId Int
 }
-
-
 
 enum ServiceMessageOption {
   LINEOA
@@ -96,12 +93,10 @@ enum ServiceMessageOption {
   BOTH
 }
 
-
 enum status {
   ACTIVE
   INACTIVE
 }
-
 
 enum statusPackageOrder {
   WAITNG_PAYMENT
